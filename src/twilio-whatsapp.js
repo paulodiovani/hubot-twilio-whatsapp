@@ -1,15 +1,28 @@
-const EventEmitter = require('events').EventEmitter
 const { TextMessage } = require('hubot')
+const EventEmitter = require('events').EventEmitter
+const Twilio = require('twilio')
 
 class TwilioWhatsAppAdapter extends EventEmitter {
   constructor (robot) {
     super()
     this.robot = robot
     this.robot.logger.debug('Constructor')
+
+    this.from = process.env.HUBOT_SMS_FROM
+    this.client = Twilio(process.env.HUBOT_SMS_SID, process.env.HUBOT_SMS_TOKEN)
   }
 
   send (envelope, ...strings) {
     this.robot.logger.debug('Send', envelope, strings)
+
+    strings.forEach((str) => {
+      this.client.messages.create({
+        from: `whatsapp:${this.from}`,
+        body: str,
+        to: `whatsapp:${envelope.user.number}`
+      })
+        .then((msg) => this.robot.logger.info('MessageSid', msg.sid))
+    })
   }
 
   emote (envelope, ...strings) {
@@ -21,10 +34,6 @@ class TwilioWhatsAppAdapter extends EventEmitter {
     const answers = strings.map((s) => `${envelope.user.name}: ${s}`)
     this.send(this, envelope, ...answers)
   }
-
-  // reply (envelope, ...strings) {
-  //   this.robot.logger.info('Reply')
-  // }
 
   run () {
     this.robot.logger.debug('Run')
