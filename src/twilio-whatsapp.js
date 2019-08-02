@@ -26,13 +26,13 @@ class TwilioWhatsAppAdapter extends EventEmitter {
   }
 
   emote (envelope, ...strings) {
-    Array.from(strings).map((str) => this.send(envelope, `* ${str}`))
+    strings.forEach((str) => this.send(envelope, `* ${str}`))
   }
 
   reply (envelope, ...strings) {
     this.robot.logger.debug('Reply')
     const answers = strings.map((s) => `${envelope.user.name}: ${s}`)
-    this.send(this, envelope, ...answers)
+    this.send(envelope, ...answers)
   }
 
   run () {
