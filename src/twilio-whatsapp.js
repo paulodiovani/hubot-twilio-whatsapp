@@ -1,8 +1,10 @@
-const { Adapter, TextMessage, User } = require('hubot')
+const EventEmitter = require('events').EventEmitter
+const { TextMessage, User } = require('hubot')
 
-class TwilioWhatsAppAdapter extends Adapter {
+class TwilioWhatsAppAdapter extends EventEmitter {
   constructor (robot) {
-    super(robot)
+    super()
+    this.robot = robot
     this.robot.logger.info('Constructor')
   }
 
