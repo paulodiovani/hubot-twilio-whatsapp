@@ -56,7 +56,7 @@ class TwilioWhatsAppAdapter extends EventEmitter {
 
     if (!From || !Body.trim()) return
 
-    const user = this.robot.brain.userForId(From, { name: 'Twilio', room: 'Twilio', number: From })
+    const user = this.robot.brain.userForId(From, { room: 'Twilio', number: From })
     const message = new TextMessage(user, Body.trim(), MessageSid)
     this.robot.logger.debug('Message', message)
 
