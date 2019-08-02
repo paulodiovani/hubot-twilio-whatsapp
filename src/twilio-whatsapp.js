@@ -19,7 +19,7 @@ class TwilioWhatsAppAdapter extends EventEmitter {
       this.client.messages.create({
         from: `whatsapp:${this.from}`,
         body: str,
-        to: `whatsapp:${envelope.user.number}`
+        to: envelope.user.number
       })
         .then((msg) => this.robot.logger.info('MessageSid', msg.sid))
     })
