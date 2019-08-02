@@ -22,6 +22,7 @@ class TwilioWhatsAppAdapter extends EventEmitter {
         to: envelope.user.number
       })
         .then((msg) => this.robot.logger.info('MessageSid', msg.sid))
+        .catch((err) => this.robot.logger.error('Error', err))
     })
   }
 
