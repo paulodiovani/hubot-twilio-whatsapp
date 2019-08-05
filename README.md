@@ -2,6 +2,8 @@
 
 A [Hubot](https://hubot.github.com/) Adapter for Twilio Whastapp messages.
 
+Based on [Hubot Twilio Adapter](https://github.com/jkarmel/hubot-twilio)
+
 ## Seting up
 
 1. Create a Twilio account at http://www.twilio.com
