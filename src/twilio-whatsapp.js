@@ -36,7 +36,7 @@ class TwilioWhatsAppAdapter extends EventEmitter {
 
   reply (envelope, ...strings) {
     this.robot.logger.debug('Reply')
-    const answers = strings.map((s) => `@${envelope.user.name}: ${s}`)
+    const answers = strings.map((s) => `${this.senderName(envelope.user)}: ${s}`)
     this.send(envelope, ...answers)
   }
 
@@ -66,6 +66,13 @@ class TwilioWhatsAppAdapter extends EventEmitter {
     this.robot.logger.debug('Message', JSON.stringify(message))
 
     this.robot.receive(message, cb)
+  }
+
+  senderName (user) {
+    const { name, number } = user
+
+    if (name === number) return number.replace('whatsapp:', '@')
+    return name
   }
 }
 
