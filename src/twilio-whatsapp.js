@@ -13,14 +13,18 @@ class TwilioWhatsAppAdapter extends EventEmitter {
   }
 
   send (envelope, ...strings) {
-    this.robot.logger.debug('Send', envelope, strings)
+    this.robot.logger.debug('Send Envelope', JSON.stringify(envelope))
+    this.robot.logger.debug('Send Strings', JSON.stringify(strings))
 
     strings.forEach((str) => {
-      this.client.messages.create({
+      const message = {
         from: `whatsapp:${this.from}`,
         body: str,
         to: envelope.user.number
-      })
+      }
+      this.robot.logger.debug('Send Message', JSON.stringify(message))
+
+      this.client.messages.create(message)
         .then((msg) => this.robot.logger.info('MessageSid', msg.sid))
         .catch((err) => this.robot.logger.error('Error', err))
     })
@@ -41,7 +45,7 @@ class TwilioWhatsAppAdapter extends EventEmitter {
 
     this.robot.router.post('/hubot/sms', (req, res) => {
       const payload = req.body.payload ? JSON.parse(req.body.payload) : req.body
-      this.robot.logger.debug('Post', payload)
+      this.robot.logger.debug('Post', JSON.stringify(payload))
 
       this.receiveSms(payload, () => {
         res.writeHead(200, { 'Content-Type': 'text/plain' })
@@ -59,7 +63,7 @@ class TwilioWhatsAppAdapter extends EventEmitter {
 
     const user = this.robot.brain.userForId(From, { room: 'Twilio', number: From })
     const message = new TextMessage(user, Body.trim(), MessageSid)
-    this.robot.logger.debug('Message', message)
+    this.robot.logger.debug('Message', JSON.stringify(message))
 
     this.robot.receive(message, cb)
   }
