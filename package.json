@@ -1,6 +1,6 @@
 {
   "name": "hubot-twilio-whatsapp",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Twilio adapter for Hubot",
   "main": "src/twilio-whatsapp.js",
   "engines": {
@@ -15,11 +15,12 @@
     "hubot-adapter",
     "twilio-whatsapp"
   ],
-  "peerDependencies": {
-    "hubot": "^3.3.2"
-  },
   "author": "Paulo Diovani Gonçalves <paulo AT diovani DOT com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paulodiovani/hubot-twilio-whatsapp.git"
+  },
   "devDependencies": {
     "eslint": "^6.1.0",
     "eslint-config-standard": "^13.0.1",
@@ -27,6 +28,9 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
+    "hubot": "^3.3.2"
+  },
+  "peerDependencies": {
     "hubot": "^3.3.2"
   },
   "dependencies": {
